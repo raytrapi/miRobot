@@ -3,11 +3,12 @@
 #include "ros/callback_queue.h"
 #include "ros/subscribe_options.h"
 #include "std_msgs/String.h"
-
+#include "Comandos.h"
 #include <stdio.h>
 #include <gazebo/gazebo.hh>
 namespace gazebo{
-	void Listner::init(){
+	void Listner::init(MiRobot * robot){
+		this->robot=robot;
 		//Listner::contadorConexiones=0;
 		if(!ros::isInitialized()){
 			int argc=0;
@@ -40,7 +41,9 @@ namespace gazebo{
 	}
 	void Listner::listener(const std_msgs::String::ConstPtr& msg){
 		std::string m=msg->data.c_str();
-		gzdbg<<m<<"\r\n";
+		Comandos::procesar(m, this->robot);
+		//gzdbg<<m<<"\r\n";
+
 	}
 
 	void Listner::conexion(const ros::SingleSubscriberPublisher&){
@@ -58,7 +61,8 @@ namespace gazebo{
 			///if(Listner::contadorConexiones>0){
 				std_msgs::String m;
 				std::stringstream ms;
-				ms<<"Hay conectados \r\n";
+				//ms<<"Hay conectados \r\n";
+				ms<<this->robot->getEstado()<<"\r\n";
 				m.data=ms.str();
 
 				this->publisher.publish(m);

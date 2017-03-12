@@ -130,6 +130,7 @@ include_directories(
 add_library(${PROJECT_NAME}
    codigo/miRobot.cpp
    codigo/listner.cpp
+   codigo/Comandos.cpp
  )
 
 ## Add cmake target dependencies of the library

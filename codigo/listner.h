@@ -8,9 +8,11 @@
 
 #include <stdio.h>
 #include <thread>
+#include "miRobot.h"
 
 
 namespace gazebo{
+	class MiRobot;
 	class Listner{
 		private:
 			std::unique_ptr<ros::NodeHandle> nodo;
@@ -20,9 +22,10 @@ namespace gazebo{
 			ros::CallbackQueue cola2;
 			std::thread threadColas;
 			//static int contadorConexiones;
+			MiRobot * robot;
 
 		public:
-			void init();
+			void init(MiRobot *);
 			void listener(const std_msgs::String::ConstPtr& msg);
 			static void conexion(const ros::SingleSubscriberPublisher&);
 			static void desconexion(const ros::SingleSubscriberPublisher&);

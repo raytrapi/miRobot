@@ -477,7 +477,7 @@
             <use_parent_model_frame>1</use_parent_model_frame>
           </axis>
       </joint>
-       <joint name="dedo2J" type="prismatic">
+      <joint name="dedo2J" type="prismatic">
         <pose frame="">0 -0.01 0 0 0 0</pose>
         <parent>mano</parent>
         <child>dedo2</child>
