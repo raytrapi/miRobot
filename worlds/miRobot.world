@@ -385,7 +385,7 @@
               <lower>-3.14</lower>
               <upper>3.14</upper>
               <!--<effort>9</effort>-->
-              <!--<velocity>0</velocity>-->
+              <velocity>0.1</velocity>
             </limit>
             <xyz>0 0 -1</xyz>
             <use_parent_model_frame>1</use_parent_model_frame>
@@ -407,7 +407,7 @@
               <lower>0</lower>
               <upper>3.14</upper>
              <!--<effort>9</effort>-->
-              <!--<velocity>0</velocity>-->
+              <velocity>0.1</velocity>
             </limit>
             <xyz>1 0 0</xyz>
             <use_parent_model_frame>1</use_parent_model_frame>
@@ -428,7 +428,7 @@
               <lower>-3.14</lower>
               <upper>3.14</upper>
               <!--<effort>9</effort>-->
-              <!--<velocity>0</velocity>-->
+              <velocity>0.1</velocity>
             </limit>
             <xyz>1 0 0</xyz>
             <use_parent_model_frame>1</use_parent_model_frame>
@@ -449,7 +449,7 @@
               <lower>-3.14</lower>
               <upper>3.14</upper>
              <!--<effort>9</effort>-->
-              <!--<velocity>0</velocity>-->
+              <velocity>0.1</velocity>
             </limit>
             <xyz>0 0 1</xyz>
             <use_parent_model_frame>1</use_parent_model_frame>
@@ -471,7 +471,7 @@
               <lower>0</lower>
               <upper>0.05</upper>
              <!--<effort>9</effort>-->
-              <!--<velocity>0</velocity>-->
+              <velocity>0.1</velocity>
             </limit>
             <xyz>0 1 0</xyz>
             <use_parent_model_frame>1</use_parent_model_frame>
@@ -492,7 +492,7 @@
               <lower>0</lower>
               <upper>0.05</upper>
              <!--<effort>9</effort>-->
-              <!--<velocity>0</velocity>-->
+              <velocity>0.1</velocity>
             </limit>
             <xyz>0 -1 0</xyz>
             <use_parent_model_frame>1</use_parent_model_frame>
@@ -500,6 +500,7 @@
       </joint>
       
       <plugin name="actuador" filename="libmiRobot.so">
+      
       </plugin>
      
     </model>
