@@ -1,6 +1,6 @@
 <?xml version="1.0"?>
 <package>
-  <name>miRobot</name>
+  <name>mi_robot</name>
   <version>0.0.0</version>
   <description>Mi primer Robot</description>
 

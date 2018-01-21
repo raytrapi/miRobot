@@ -1,4 +1,3 @@
-#include "listner.h"
 #include "ros/ros.h"
 #include "ros/callback_queue.h"
 #include "ros/subscribe_options.h"
@@ -6,10 +5,12 @@
 #include "Comandos.h"
 #include <stdio.h>
 #include <gazebo/gazebo.hh>
+
+#include "listener.h"
 namespace gazebo{
-	void Listner::init(MiRobot * robot){
+	void Listener::init(MiRobot * robot, const std::string topic){
 		this->robot=robot;
-		//Listner::contadorConexiones=0;
+		//Listener::contadorConexiones=0;
 		if(!ros::isInitialized()){
 			int argc=0;
 			char **argv=NULL;
@@ -19,42 +20,43 @@ namespace gazebo{
 		this->nodo.reset(new ros::NodeHandle("gazebo_client"));
 
 		ros::SubscribeOptions so=ros::SubscribeOptions::create<std_msgs::String>(
-				"/miRobot",
+				topic,
 				1,
-				boost::bind(&Listner::listener, this, _1),
+				boost::bind(&Listener::listener, this, _1),
 				ros::VoidPtr(),
 				&this->cola
 				);
 		this->subscriber=this->nodo->subscribe(so);
 
 		ros::AdvertiseOptions ad=ros::AdvertiseOptions::create<std_msgs::String>(
-						"/miRobot_m",
+						topic+"_m",
 						1,
-						&this->conexion,
-						&this->desconexion,
+						boost::bind(&Listener::conexion,this),
+								boost::bind(&Listener::desconexion,this),
 						ros::VoidPtr(),
 						&this->cola2
 						);
 		this->publisher=this->nodo->advertise(ad);
 
-		this->threadColas=std::thread(std::bind(&Listner::thread, this));
+		this->threadColas=std::thread(std::bind(&Listener::thread, this));
 	}
-	void Listner::listener(const std_msgs::String::ConstPtr& msg){
+	void Listener::listener(const std_msgs::String::ConstPtr& msg){
 		std::string m=msg->data.c_str();
 		Comandos::procesar(m, this->robot);
 		//gzdbg<<m<<"\r\n";
 
 	}
 
-	void Listner::conexion(const ros::SingleSubscriberPublisher&){
+	void Listener::conexion(){
 		ROS_INFO("Me conecto");
+		gzdbg<<"Me conecto"<<"\r\n";
 		//Listner::contadorConexiones++;
 	}
-	void Listner::desconexion(const ros::SingleSubscriberPublisher&){
+	void Listener::desconexion(){
 		ROS_INFO("Me desconecto");
 		//Listner::contadorConexiones--;
 	}
-	void Listner::thread(){
+	void Listener::thread(){
 		static const double timeout=0.01;
 		while(this->nodo->ok()){
 			this->cola.callAvailable(ros::WallDuration(timeout));

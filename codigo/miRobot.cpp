@@ -1,18 +1,16 @@
 #include "miRobot.h"
-#include "listner.h"
-#include <gazebo/gazebo.hh>
-#include <gazebo/physics/physics.hh>
-#include <map>
+
+#include "listener.h"
 
 namespace gazebo{
 	 void MiRobot::Load (physics::ModelPtr _model,sdf::ElementPtr _sdf){
 		 this->modelo=_model;
 		 this->sdf=_sdf;
 		 cargarUniones();
-		 gzdbg<<"Hola Mundo\r\n";
-		 listner=new Listner();
+		 //gzdbg<<"Hola Mundo\r\n";
+		 listener=new Listener();
 		 this->estado="inciado";
-		 listner->init(this);
+		 listener->init(this,"/"+((_sdf->HasElement("topic"))?_sdf->GetElement("topic")->GetValue()->GetAsString():_model->GetName()));
 
 		 this->conexionUpdate=event::Events::ConnectWorldUpdateBegin(boost::bind(&MiRobot::OnUpdate,this,_1));
 

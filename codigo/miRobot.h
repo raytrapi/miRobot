@@ -1,8 +1,9 @@
 #ifndef MIROBOT
 #define MIROBOT
-#include "listner.h"
+#include "listener.h"
 #include <gazebo/gazebo.hh>
 #include <gazebo/physics/physics.hh>
+#include <map>
 namespace gazebo{
    struct Union{
 	   physics::JointPtr joint;
@@ -15,9 +16,9 @@ namespace gazebo{
 	   bool moviendo=false;
 
    };
-    class Listner;
+    class Listener;
 	class MiRobot: public ModelPlugin{
-		Listner *listner;
+		Listener *listener;
 		physics::ModelPtr modelo;
 		sdf::ElementPtr sdf;
 		std::map<std::string,Union> uniones;

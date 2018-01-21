@@ -13,7 +13,7 @@
 
 namespace gazebo{
 	class MiRobot;
-	class Listner{
+	class Listener{
 		private:
 			std::unique_ptr<ros::NodeHandle> nodo;
 			ros::Subscriber subscriber;
@@ -25,10 +25,10 @@ namespace gazebo{
 			MiRobot * robot;
 
 		public:
-			void init(MiRobot *);
+			void init(MiRobot *,const std::string);
 			void listener(const std_msgs::String::ConstPtr& msg);
-			static void conexion(const ros::SingleSubscriberPublisher&);
-			static void desconexion(const ros::SingleSubscriberPublisher&);
+			void conexion();
+			void desconexion();
 			void thread();
 	};
 }

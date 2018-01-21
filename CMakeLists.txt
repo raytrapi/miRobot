@@ -1,5 +1,5 @@
 cmake_minimum_required(VERSION 2.8.3)
-project(miRobot)
+project(mi_robot)
 
 ## Find catkin macros and libraries
 ## if COMPONENTS list like find_package(catkin REQUIRED COMPONENTS xyz)
@@ -109,7 +109,7 @@ catkin_package(
   DEPENDS 
   	roscpp
   	gazebo_ros
-  	gazebp_plugins
+  	
 )
 
 ###########
@@ -129,10 +129,13 @@ include_directories(
 ## Declare a C++ library
 add_library(${PROJECT_NAME}
    codigo/miRobot.cpp
-   codigo/listner.cpp
+   codigo/listener.cpp
    codigo/Comandos.cpp
+   #codigo/Laser.cpp
  )
-
+add_library(mi_laser
+   codigo/Laser.cpp
+ )
 ## Add cmake target dependencies of the library
 ## as an example, code may need to be generated before libraries
 ## either from message generation or dynamic reconfigure
@@ -149,6 +152,11 @@ add_library(${PROJECT_NAME}
 target_link_libraries(${PROJECT_NAME}
    ${catkin_LIBRARIES}
 )
+target_link_libraries(mi_laser
+   ${catkin_LIBRARIES} RayPlugin
+)
+
+
 add_definitions(-std=c++11)
 #############
 ## Install ##
