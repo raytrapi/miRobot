@@ -866,7 +866,7 @@
                 <max_angle>1.57</max_angle>
               </horizontal>
               <vertical>
-                <samples>100</samples>
+                <samples>5</samples>
                 <resolution>1</resolution>
                 <min_angle>0</min_angle>
                 <max_angle>1.57</max_angle>
@@ -878,12 +878,33 @@
               <resolution>0.36</resolution>
             </range>
           </ray>
-          <plugin name="laser" filename="libmi_laser.so">
+          <!--<plugin name="laser" filename="libmi_laser.so">
           	<topic>laser</topic>
-          </plugin>
+          </plugin>-->
           <always_on>0</always_on>
           <update_rate>10</update_rate>
           <visualize>0</visualize>
+        </sensor>
+        <sensor type="camera" name="te_veo">
+          <pose frame=''>0 0 +0.3 0 -0 0</pose>
+          <camera>
+            <horizontal_fov>1.047</horizontal_fov>
+            <image>
+              <width>640</width>
+              <height>480</height>
+              <format>R8G8B8</format>
+            </image>
+            <clip>
+              <near>0.1</near>
+              <far>100</far>
+            </clip>
+          </camera>
+          <always_on>1</always_on>
+          <update_rate>0.5</update_rate>
+          <visualize>false</visualize>
+          <plugin name="ojo" filename="libte_veo.so">
+          	<topic>camara</topic>
+          </plugin>
         </sensor>
         <gravity>1</gravity>
         <self_collide>0</self_collide>
@@ -2499,7 +2520,7 @@
           </ray>
           <always_on>0</always_on>
           <update_rate>10</update_rate>
-          <visualize>1</visualize>
+          <visualize>0</visualize>
         </sensor>
         <gravity>1</gravity>
         <self_collide>0</self_collide>
