@@ -7,7 +7,7 @@
 #include <stdio.h>
 #include <gazebo/gazebo.hh>
 
-#include "../src/Comandos.h"
+#include "comandos.h"
 namespace gazebo{
 	void Listener::init(MiRobot * robot, const std::string topic){
 		this->robot=robot;
@@ -43,6 +43,7 @@ namespace gazebo{
 	}
 	void Listener::listener(const std_msgs::String::ConstPtr& msg){
 		std::string m=msg->data.c_str();
+		Comandos::ruta="";
 		Comandos::procesar(m, this->robot);
 		//gzdbg<<m<<"\r\n";
 

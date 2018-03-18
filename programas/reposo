@@ -1,0 +1,29 @@
+#e retroceder
+#s 6000
+e parar
+p arm_joint_5 VM 0.5
+p arm_joint_1 VM 0.5
+p arm_joint_2 VM 0.5
+p arm_joint_3 VM 0.5
+p arm_joint_4 VM 0.5
+m arm_joint_5 0
+m arm_joint_1 0
+m arm_joint_2 0
+m arm_joint_3 0
+m arm_joint_4 0
+m gripper_finger_joint_l -0.1
+m gripper_finger_joint_r -0.1
+#s 4000
+#e avanzar
+#s 4300
+#e parar
+s 10000
+p arm_joint_5 VM 0
+p arm_joint_1 VM 0
+p arm_joint_2 VM 0
+p arm_joint_3 VM 0
+p arm_joint_4 VM 0
+p gripper_finger_joint_l VM 0
+p gripper_finger_joint_r VM 0
+p gripper_finger_joint_l V 0
+p gripper_finger_joint_r V 0

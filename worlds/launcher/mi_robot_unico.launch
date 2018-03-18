@@ -1,13 +1,13 @@
 <launch>
 
-  <arg name="paused" default="true"/>
+  <arg name="paused" default="false"/>
   <arg name="use_sim_time" default="true"/>
   <arg name="gui" default="true"/>
   <arg name="headless" default="false"/>
   <arg name="debug" default="false"/>
 
   <include file="$(find gazebo_ros)/launch/empty_world.launch">
-    <arg name="world_name" value="$(find mi_robot)/worlds/miRobot2.world"/>
+    <arg name="world_name" value="$(find mi_robot)/worlds/miRobot3.world"/>
     <arg name="verbose" value="false"/>
     <arg name="debug" value="$(arg debug)" />
     <arg name="gui" value="$(arg gui)" />
