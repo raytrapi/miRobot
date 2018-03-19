@@ -130,7 +130,7 @@ include_directories(
 add_library(${PROJECT_NAME}
    src/miRobot.cpp
    src/listener.cpp
-   src/Comandos.cpp
+   src/comandos.cpp
    #codigo/Laser.cpp
  )
 add_library(mi_laser
@@ -169,6 +169,7 @@ add_definitions(-std=c++11)
 
 add_subdirectory(extras/teVeo)
 add_subdirectory(extras/controlador1)
+add_subdirectory(extras/control_remoto)
 
 #############
 ## Install ##
