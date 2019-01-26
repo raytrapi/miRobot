@@ -23,7 +23,7 @@
 #include <gazebo/plugins/CameraPlugin.hh>
 #include <gazebo/rendering/rendering.hh> //Para distorsion
 
-#include <ignition/math2/ignition/math.hh>
+#include <ignition/math4/ignition/math.hh>
 
 #include <gazebo_plugins/GazeboRosCameraConfig.h>
 #include <dynamic_reconfigure/server.h>

@@ -20,7 +20,7 @@ namespace ray {
 		msgInfoCamara.D.resize(5);
 		//gazebo::rendering::DistortionPtr distorsion=camara->LensDistortion();;
 		//double hfov = camara->HFOV().Radian();
-		gazebo::math::Vector2d centro;
+		ignition::math::Vector2d centro;
 		/*if(distorsion!=NULL){
 			centro=	distorsion->GetCenter();
 			infoCamara.D[0]=distorsion->GetK1();

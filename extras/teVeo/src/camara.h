@@ -15,6 +15,7 @@
 #include <sensor_msgs/fill_image.h>
 //#include <ros/callback_queue.h>
 #include <image_transport/image_transport.h>
+#include <ignition/math4/ignition/math.hh>
 
 #include <iostream>
 #include <stdio.h>
