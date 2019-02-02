@@ -1,0 +1,65 @@
+p arm_joint_1 VM 1
+p arm_joint_2 VM 1
+p arm_joint_3 VM 1
+p arm_joint_4 VM 1
+p arm_joint_5 VM 1
+p gripper_finger_joint_l VM 2
+p gripper_finger_joint_r VM 2
+
+m arm_joint_5 2.9
+s 1000
+# movemos el brazo a la posición 1
+m arm_joint_1 3
+m arm_joint_2 0
+s 4000
+
+# movemos el brazo para comenzar a coger
+
+m arm_joint_3 -1
+m arm_joint_2 2.1
+m arm_joint_4 1
+
+# nos aproximamos y abrimos las pinzas
+
+m gripper_finger_joint_l 0.115
+m gripper_finger_joint_r 0.115
+
+
+s 5000
+e avanzar
+s 1200
+e parar
+
+# Cogemos la pieza
+p gripper_finger_joint_l VM 2
+p gripper_finger_joint_r VM 2
+m gripper_finger_joint_l -0.1
+m gripper_finger_joint_r -0.1
+s 1000
+
+# Levantamos la pieza
+m arm_joint_4 0
+s 3000
+
+# Giramos la pieza
+p arm_joint_5 VM 5
+m arm_joint_5 -0.2
+s 5000
+
+# Bajamos la  pieza
+m arm_joint_4 1
+s 4000
+
+# Solatamos la pieza
+p gripper_finger_joint_l VM 0.5
+p gripper_finger_joint_r VM 0.5
+m gripper_finger_joint_l 0.115
+m gripper_finger_joint_r 0.115
+s 1000
+
+e retroceder
+s 1200
+e parar
+
+e reposo
+#Termino
