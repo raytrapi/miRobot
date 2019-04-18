@@ -6,8 +6,13 @@
 
 #include "../src/listener.h"
 std::vector<std::string> split(const std::string &c, char d);
+std::string trim(const std::string &);
 namespace gazebo{
-
+   struct Vector_Fuerza{
+	   double tiempo;
+	   common::Time ultimaRevision;
+	   std::vector<double> fuerzas;
+   };
    struct Union{
 	   enum TIPOMOVIMIENTO {NINGUNO=0, VELOCIDAD=1, FUERZA=2} ;
 	   physics::JointPtr joint;
@@ -18,14 +23,16 @@ namespace gazebo{
 
 	   double velocidad;
 	   double anguloFinal;
-	   double fuerza;
+	   //double fuerza;
 	   //double fuerzaFinal;
+	   Vector_Fuerza fuerzas;
 
 	   bool moviendo=false;
 
 
 	   TIPOMOVIMIENTO tipoMovimiento=NINGUNO;
    };
+
     class Listener;
 	class MiRobot: public ModelPlugin{
 			Listener *listener;
@@ -45,7 +52,7 @@ namespace gazebo{
 				return estado;
 			}
 			void mover(std::string laUnion, double valor);
-			void parametrizar(std::string laUnion,std::string tipo, double valor);
+			void parametrizar(std::string laUnion,std::string tipo, double valor,std::vector<std::string>&);
 			void pintar(std::string);
 			void cargarUniones();
 			std::string ultimoComando="";

@@ -47,7 +47,14 @@ namespace gazebo{
 				 case Union::FUERZA:
 					 //gzdbg<<"Fuerza"<<_union->fuerza<<"\r\n";
 					 //gzdbg<<"Actual Fuerza"<<_union->joint->GetForce(0)<<"\r\n";
-					 _union->joint->SetForce(0,_union->fuerza);
+					 if(_union->fuerzas.tiempo!=0 && _union->fuerzas.fuerzas.size()>1 &&
+						actual>=_union->fuerzas.ultimaRevision+_union->fuerzas.tiempo){
+						 //double fuerza=_union->fuerzas.fuerzas[0];
+						 _union->fuerzas.fuerzas.erase(_union->fuerzas.fuerzas.begin());
+						 ROS_INFO("Fuerza para la uni贸n %s = %f",_union->joint->GetName().c_str(),_union->fuerzas.fuerzas[0]);
+						 _union->fuerzas.ultimaRevision=actual;
+					 }
+					 _union->joint->SetForce(0,_union->fuerzas.fuerzas[0]);
 					 break;
 				 default:
 					 _union->joint->SetVelocity(0,0);
@@ -65,18 +72,27 @@ namespace gazebo{
 		 }
 	 }
 	 void MiRobot::mover(std::string laUnion, double valor){
+		 if(uniones.find(laUnion)==uniones.end()){
+			 ROS_INFO("No se ha encontrado al uni贸n %s",laUnion);
+		 }
 		 Union *_union=&uniones[laUnion];
 		 if(_union){
 			 _union->anguloFinal=valor;
 			 _union->tiempoActual=0;
 			 _union->moviendo=true;
+			 _union->tipoMovimiento=Union::VELOCIDAD;
 		 }
 	 }
-	 void MiRobot::parametrizar(std::string laUnion,std::string tipo, double valor){
+	 void MiRobot::parametrizar(std::string laUnion,std::string tipo, double valor, std::vector<std::string> &partes){
+		 if(uniones.find(laUnion)==uniones.end()){
+			 ROS_INFO("No se ha encontrado la uni贸n %s",laUnion.c_str());
+		 }else{
+			 ROS_INFO("Encuentro la uni贸n %s",laUnion.c_str());
+		 }
 		 Union *_union=&uniones[laUnion];
 		 if(_union){
 			 if(tipo=="V"){
-				 //mostramos la velocidad actual de la uni髇
+				 //mostramos la velocidad actual de la uni锟絥
 				 std::stringstream ss;
 				 ss<<"Velocidad de "<<laUnion<<"= ["<<std::to_string(_union->joint->GetVelocity(0));
 				 ss<<", "<<std::to_string(_union->joint->GetVelocity(1));
@@ -95,10 +111,27 @@ namespace gazebo{
 				 std::stringstream ss;
 				 ss<<"Fuerza de "<<laUnion<<"= ["<<std::to_string(_union->joint->GetForce(0));
 				 ss<<"]";
-				 _union->fuerza=valor;
+				 _union->fuerzas.tiempo=0;
+				 _union->fuerzas.fuerzas.clear();
+				 _union->fuerzas.fuerzas.push_back(valor);
+				 _union->fuerzas.ultimaRevision=modelo->GetWorld()->SimTime();
 				 listener->insertarMensaje(ss.str());
 				 /*_union->pidFuerza.SetCmdMax(valor);
 				 _union->pidFuerza.SetCmdMin(-1*valor);/**/
+
+			 }else if(tipo=="FT"){
+				 //Obtenemos cada elemento
+				 //Vector_Fuerza vF;
+				 _union->fuerzas.tiempo=valor;
+				 _union->fuerzas.fuerzas.clear();
+				 for (int i = 4; i < partes.size(); i++) { //Las fuerzas est谩n a partir del 4 par谩metro
+					 std::string str=trim(partes[i]);
+					 if(str!=""){
+						 _union->fuerzas.fuerzas.push_back(std::stod(str));
+					 }
+				}
+				_union->fuerzas.ultimaRevision=modelo->GetWorld()->SimTime();
+				_union->tipoMovimiento=Union::FUERZA;
 
 			 }else{
 				 _union->tipoMovimiento=Union::NINGUNO;
@@ -170,4 +203,13 @@ std::vector<std::string> split(const std::string &c, char d){
 	}
 
 	return resultado;
+}
+std::string trim(const std::string &c){
+	std::string s=c;
+	while( !s.empty() && std::isspace( s.back() ) ) s.pop_back() ;
+
+	// return residue after leading white space
+	std::size_t pos = 0 ;
+	while( pos < s.size() && std::isspace( s[pos] ) ) ++pos ;
+	return s.substr(pos) ;
 }

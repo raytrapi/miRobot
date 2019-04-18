@@ -28,9 +28,9 @@ namespace gazebo {
 					break;
 				case 'p':
 					//p union tipo valor
-					//Parametriza la unión con el valor indicado V=Velocidad constante, VM=con PID
+					//Parametriza la unión con el valor indicado V=Velocidad constante, VM=Velocidada con PID, F=Fuerza, FT= Fuezas por tiempo
 					if(partes.size()>3){
-						robot->parametrizar(partes[1],partes[2],std::stod(partes[3]));
+						robot->parametrizar(partes[1],partes[2],std::stod(partes[3]),partes);
 					}
 
 					break;
