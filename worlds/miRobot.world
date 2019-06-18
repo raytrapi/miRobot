@@ -223,9 +223,14 @@
           <pose>0 0 0 0 0 0</pose>
           
           <geometry>
-            <box>
+           <!-- <box>
               <size>0.05 0.05 1</size>
-            </box>
+            </box> -->
+            <mesh>
+            	<uri>file://worlds/robot/brazo.stl</uri>
+            	<scale>1 1 1</scale>
+            </mesh>
+
           </geometry>
           <surface>
              <contact>
@@ -249,11 +254,19 @@
         <visual name="eslabon2V">
           <pose>0 0 0 0 0 0</pose>
           <geometry>
-            <box>
+            <!-- <box>
               <size>0.05 0.05 1</size>
-            </box>
+            </box> -->
+            <mesh>
+            	<uri>file://worlds/robot/brazo.dae</uri>
+            	<scale>1 1 1</scale>
+            </mesh>
           </geometry>
         </visual>
+        <sensor name="velocidad2" type="imu">
+         	<update_rate>30</update_rate>
+         	<always_on>1</always_on>
+        </sensor>
       </link>
        <link name="eslabon3">
         <pose>0.1 0 2.590 0 0 0</pose>
@@ -457,49 +470,54 @@
         <pose frame="">0 0 -10.5 0 0 0</pose>
         <parent>base</parent>
         <child>eslabon1</child>
-         <axis>
-            <dynamics>
-              <damping>1</damping>
-              <friction>1</friction>
-              <spring_reference>0</spring_reference>
-              <spring_stiffness>0</spring_stiffness>
-              
-            </dynamics>
-            <limit>
-              <lower>-3.14</lower>
-              <upper>3.14</upper>
-              <effort>9.5</effort>
-              <velocity>0.1</velocity>
-            </limit>
-            <xyz>0 0 -1</xyz>
-            <use_parent_model_frame>1</use_parent_model_frame>
-          </axis>
-          <!--<physics>
-          	<ode>
-          	</ode>
-          </physics>-->
+        <axis>
+           <dynamics>
+             <damping>1</damping>
+             <friction>1</friction>
+             <spring_reference>0</spring_reference>
+             <spring_stiffness>0</spring_stiffness>
+             
+           </dynamics>
+           <limit>
+             <lower>-3.14</lower>
+             <upper>3.14</upper>
+             <effort>9.5</effort>
+             <velocity>0.1</velocity>
+           </limit>
+           <xyz>0 0 -1</xyz>
+           <use_parent_model_frame>1</use_parent_model_frame>
+         </axis>
+         <!--<physics>
+         	<ode>
+         	</ode>
+         </physics>-->
+         
       </joint>
       
       <joint name="eslabon2J" type="revolute">
         <pose frame="">0 0 -0.475 0 0 0</pose>
         <parent>eslabon1</parent>
         <child>eslabon2</child>
-         <axis>
-            <dynamics>
-              <damping>1</damping>
-              <friction>0</friction>
-              <spring_reference>0</spring_reference>
-              <spring_stiffness>0</spring_stiffness>
-            </dynamics>
-            <limit>
-              <lower>0</lower>
-              <upper>3.14</upper>
-             <!--<effort>9</effort>-->
-              <velocity>0.1</velocity>
-            </limit>
-            <xyz>1 0 0</xyz>
-            <use_parent_model_frame>1</use_parent_model_frame>
-          </axis>
+        <axis>
+           <dynamics>
+             <damping>1</damping>
+             <friction>0</friction>
+             <spring_reference>0</spring_reference>
+             <spring_stiffness>0</spring_stiffness>
+           </dynamics>
+           <limit>
+             <lower>0</lower>
+             <upper>3.14</upper>
+            <!--<effort>9</effort>-->
+             <velocity>0.1</velocity>
+           </limit>
+           <xyz>1 0 0</xyz>
+           <use_parent_model_frame>1</use_parent_model_frame>
+         </axis>
+         <sensor name="fuerza2" type="force_torque">
+          <update_rate>30</update_rate>
+          <always_on>1</always_on>
+        </sensor>
       </joint>
       <joint name="eslabon3J" type="revolute">
         <pose frame="">0 0 -0.475 0 0 0</pose>

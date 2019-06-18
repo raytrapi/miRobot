@@ -8,6 +8,7 @@ namespace gazebo{
 		 this->modelo=_model;
 		 this->sdf=_sdf;
 		 cargarUniones();
+		 cargarSensores();
 		 //gzdbg<<"Hola Mundo\r\n";
 		 listener=new Listener();
 		 std::string m="Iniciado";
@@ -16,7 +17,7 @@ namespace gazebo{
 		 listener->init(this,"/"+((_sdf->HasElement("topic"))?_sdf->GetElement("topic")->GetValue()->GetAsString():_model->GetName()));
 
 		 this->conexionUpdate=event::Events::ConnectWorldUpdateBegin(boost::bind(&MiRobot::OnUpdate,this,_1));
-
+		 this->tiempoSensorAnterior=modelo->GetWorld()->SimTime();
 	 }
 
 	 void MiRobot::OnUpdate(const common::UpdateInfo & _info){
@@ -70,6 +71,7 @@ namespace gazebo{
 				 siguienteVisualizacion=actual+frecuencia;
 			 }
 		 }
+		 leerSensores(actual);
 	 }
 	 void MiRobot::mover(std::string laUnion, double valor){
 		 if(uniones.find(laUnion)==uniones.end()){
@@ -180,6 +182,7 @@ namespace gazebo{
 		 }
 		 return resultado;
 	 }
+
 	 void MiRobot::cargarUniones(){
 		 std::map<std::string,physics::BasePtr> uniones=buscar(this->modelo,physics::Entity::EntityType::JOINT);
 		 for(auto it=uniones.begin();it!=uniones.end();it++){
@@ -190,7 +193,57 @@ namespace gazebo{
 			 this->uniones[it->first]=_union;
 		 }
 	 }
+	 void MiRobot::cargarSensores(){
 
+		 std::vector<sensors::SensorPtr> vSensores=sensors::SensorManager::Instance()->GetSensors();
+	 	 for(int i=0; i<vSensores.size();i++){
+
+	 		 this->sensores[vSensores[i]->Name()]=new _Sensor("/home/ray/robot/src/miRobot/salidas/"+vSensores[i]->Name()+".txt", vSensores[i]);
+	 		 gzerr<<vSensores[i]->Name().c_str()<<"\r\n";
+	 	 }
+	 }
+
+	 void MiRobot::leerSensores(common::Time tiempo){
+		 common::Time lapso=tiempo-this->tiempoSensorAnterior;
+		 for(auto it=this->sensores.begin();it!=this->sensores.end();it++){
+
+
+			 if(it->second->sensor->Type()=="imu"){
+				 //sensors::ImuSensor imu=(sensors::ImuSensor)(boost::static_pointer_cast<sensors::Sensor>(it->second->sensor));
+				 sensors::SensorPtr p=it->second->sensor;
+				 sensors::ImuSensorPtr imu=std::static_pointer_cast<sensors::ImuSensor>(p);
+				 if(imu->IsActive()){
+					 ignition::math::Vector3d velocidades=imu->AngularVelocity();
+					 ignition::math::Vector3d aceleraciones=imu->LinearAcceleration();
+					 std::string log="";
+				 	 log+=""+std::to_string(velocidades.X())+","+std::to_string(velocidades.Y())+","+std::to_string(velocidades.Z());
+				 	 log+=","+std::to_string(aceleraciones.X())+","+std::to_string(aceleraciones.Y())+","+std::to_string(aceleraciones.Z());
+					 (it->second)->log(tiempo,log);
+				 }
+				 /**/
+
+			 }
+			 if(it->second->sensor->Type()=="force_torque"){
+				 sensors::SensorPtr p=it->second->sensor;
+				 sensors::ForceTorqueSensorPtr fuerza=std::static_pointer_cast<sensors::ForceTorqueSensor>(p);
+				 if(fuerza->IsActive()){
+					 ignition::math::Vector3d fuerzas=fuerza->Force();
+					 std::string log="";
+					 log+=""+std::to_string(fuerzas.X())+","+std::to_string(fuerzas.Y())+","+std::to_string(fuerzas.Z());
+					 (it->second)->log(tiempo,log);
+				 }
+
+			 }
+
+		 }
+
+	 }
+
+	 MiRobot::~MiRobot(){
+		 for(auto it=this->sensores.begin();it!=this->sensores.end();it++){
+			 delete it->second;
+		 }
+	 }
 	GZ_REGISTER_MODEL_PLUGIN(MiRobot);
 }
 std::vector<std::string> split(const std::string &c, char d){
