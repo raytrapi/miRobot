@@ -1,0 +1,27 @@
+<sdf version='1.6'>
+  
+	<model name="box">
+		<pose>0 0 0.5 0 0 0</pose>
+		<link name="yo">
+			<visual name="caja1">
+				<geometry>
+					<mesh>
+						<uri>file:///home/ray/robot/src/miRobot/worlds/robot/Mi robot/r.dae</uri>
+						<scale>1 1 1</scale>
+						<submesh>
+							<name>caja</name>
+						</submesh>
+					</mesh>
+				</geometry>
+			</visual>	
+			<collision name="yoC">
+				<geometry>
+					<box>
+						<sice>3 3 3</sice>
+					</box>
+				</geometry>
+			</collision>
+		</link>
+	</model>
+
+</sdf>
