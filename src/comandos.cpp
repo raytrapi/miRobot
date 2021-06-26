@@ -24,7 +24,12 @@ namespace gazebo {
 			switch(partes[0][0]){
 				case 'd':
 					robot->pintar(comando);
-					mostrar=true;
+					mostrar=!mostrar;
+					if(mostrar){
+						ROS_INFO("Mostrando");
+					}else{
+						ROS_INFO("No mostrando");
+					}
 					break;
 				case 'p':
 					//p union tipo valor

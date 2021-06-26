@@ -124,6 +124,7 @@ include_directories(
 	${Boost_INCLUDE_DIR}
 	${catkin_INCLUDE_DIRS}
 	${GAZEBO_INCLUDE_DIRS}
+   /usr/include/sdformat-6.2/
 )
 
 ## Declare a C++ library
@@ -167,8 +168,8 @@ target_link_libraries(te_veo
 add_definitions(-std=c++11)
 
 
-add_subdirectory(extras/teVeo)
-add_subdirectory(extras/controlador1)
+#add_subdirectory(extras/teVeo)
+#add_subdirectory(extras/controlador1)
 add_subdirectory(extras/control_remoto)
 
 #############

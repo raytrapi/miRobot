@@ -1,0 +1,20 @@
+m caster_joint_fl -1
+m caster_joint_fr -1
+m caster_joint_bl 1
+m caster_joint_br 1
+
+s 2000
+p wheel_joint_bl V 5
+p wheel_joint_br V 5
+p wheel_joint_fl V 5
+p wheel_joint_fr V 5
+s 5000
+p wheel_joint_bl V 0
+p wheel_joint_br V 0
+p wheel_joint_fl V 0
+p wheel_joint_fr V 0
+
+m caster_joint_fl 0
+m caster_joint_fr 0
+m caster_joint_bl 0
+m caster_joint_br 0

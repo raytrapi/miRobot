@@ -1,0 +1,15 @@
+/build/
+.settings/language.settings.xml
+.settings/org.eclipse.core.resources.prefs
+salidas/base_laser_front.txt
+salidas/camera.txt
+salidas/dondeEstoy.txt
+salidas/fuerza2.txt
+salidas/laser.txt
+salidas/left_cliff_sensor.txt
+salidas/leftfront_cliff_sensor.txt
+salidas/right_cliff_sensor.txt
+salidas/rightfront_cliff_sensor.txt
+salidas/te_veo.txt
+salidas/velocidad2.txt
+salidas/wall_sensor.txt

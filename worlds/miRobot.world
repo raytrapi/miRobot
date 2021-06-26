@@ -258,7 +258,7 @@
               <size>0.05 0.05 1</size>
             </box> -->
             <mesh>
-            	<uri>file://worlds/robot/brazo.dae</uri>
+            	<uri>file:///home/ray/robot/src/miRobot/worlds/robot/brazo.dae</uri>
             	<scale>1 1 1</scale>
             </mesh>
           </geometry>

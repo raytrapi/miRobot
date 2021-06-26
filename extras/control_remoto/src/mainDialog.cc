@@ -17,6 +17,13 @@ MainDialog::MainDialog(QWidget *parent): QDialog(parent){
 		this->bRetroceder->move(110, 0);
 		this->bRetroceder->show();
 
+
+	this->bGirar = new QPushButton(this);
+	connect(bGirar, SIGNAL(keypress()), this, SLOT(girar()));
+	this->bGirar->setText(tr("Girar tortuga"));
+	this->bGirar->move(210, 0);
+	this->bGirar->show();
+
 	setWindowTitle(tr("Robotica"));
 	//setFixedHeight(sizeHint().height());
 
@@ -28,11 +35,14 @@ MainDialog::MainDialog(QWidget *parent): QDialog(parent){
 		ros::init(argc,argv, "MI_APP", ros::init_options::NoSigintHandler);
 	};
 	ros::NodeHandle n;
-	publicador = n.advertise<std_msgs::String>("Ray", 1000);
+	publicador = n.advertise<std_msgs::String>("tortuga", 1000);
 }
 
 void MainDialog::avanzar(){
 	enviarRos("e /home/ray/robot/src/miRobot/programas/avanzar");
+}
+void MainDialog::girar(){
+	enviarRos("e /home/ray/robot/src/miRobot/programas/girarDerechaTortuga");
 }
 void MainDialog::parar(){
 	enviarRos("e /home/ray/robot/src/miRobot/programas/parar");

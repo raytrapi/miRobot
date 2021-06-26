@@ -1,0 +1,11 @@
+p create::right_wheel V -4
+p create::left_wheel V +4
+s 1000
+p create::right_wheel V 0
+p create::left_wheel V 0
+s 1000
+p create::right_wheel V -3
+p create::left_wheel V -3
+s 5000
+p create::right_wheel V 0
+p create::left_wheel V 0

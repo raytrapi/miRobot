@@ -16,9 +16,12 @@ class MainDialog : public QDialog{
 		void parar();
 		void retroceder();
 
+		void girar();
+
 	private:
 		QPushButton *bAvanzar;
 		QPushButton *bRetroceder;
+		QPushButton *bGirar;
 		ros::Publisher publicador;
 		void enviarRos(std::string);
 };
